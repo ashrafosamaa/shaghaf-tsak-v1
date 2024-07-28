@@ -1,0 +1,1483 @@
+{
+	"info": {
+		"_postman_id": "6b0909e0-3f98-469e-94c2-50c829b6c735",
+		"name": "Shaghaf-v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30814973",
+		"_collection_link": "https://cloudy-space-135946-1.postman.co/workspace/shaghaf-project~624e35a0-67d9-4b40-95d4-2fcfbae0d70e/collection/30814973-6b0909e0-3f98-469e-94c2-50c829b6c735?action=share&source=collection_link&creator=30814973"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "create-worker",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"mazen22\",\r\n    \"password\": \"Mazen@123\",\r\n    \"passwordConfirm\": \"Mazen@123\",\r\n    \"role\": \"staff\",\r\n    \"salary\": 5000,\r\n    \"branch\": \"Dokki\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/admin/add-worker",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"admin",
+								"add-worker"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"JWT\", pm.response.json().data.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"ashraf22\",\r\n    \"password\": \"Ashraf@1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/admin/login",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"admin",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"JWT\", pm.response.json().data.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"Ashraf@123\",\r\n    \"password\": \"Ashraf@1234\",\r\n    \"passwordConfirm\": \"Ashraf@1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/admin/update-password",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"admin",
+								"update-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-admins (Admin)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/admin/workers?size=5",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"admin",
+								"workers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "sortBy",
+									"value": "name desc",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "name asc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-admin (Admin)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/admin/worker/66a51a890a64738f50ed570d",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"admin",
+								"worker",
+								"66a51a890a64738f50ed570d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-salary (Admin)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"salary\": 5500\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/admin/salary/66a51c38cc6f2176a44b5764",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"admin",
+								"salary",
+								"66a51c38cc6f2176a44b5764"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-deduction (Admin)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/admin/deduction/66a51ade0a64738f50ed5715",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"admin",
+								"deduction",
+								"66a51ade0a64738f50ed5715"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-bouns(Admin)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/admin/over-time/66a51ade0a64738f50ed5715",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"admin",
+								"over-time",
+								"66a51ade0a64738f50ed5715"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-admin (Admin)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/admin/worker/66a51b010a64738f50ed5719",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"admin",
+								"worker",
+								"66a51b010a64738f50ed5719"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search (Admin)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/admin/search?size=5&userName=m",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"admin",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "sortBy",
+									"value": "name desc",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "name asc",
+									"disabled": true
+								},
+								{
+									"key": "userName",
+									"value": "m"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "userAuth",
+			"item": [
+				{
+					"name": "signUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Ashraf\",\r\n    \"lastName\": \"Osama\",\r\n    \"email\": \"ashrafosama6699@gmail.com\",\r\n    \"phoneNumber\": \"01153152002\",\r\n    \"password\": \"Ashraf@1234\",\r\n    \"passwordConfirm\": \"Ashraf@1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/userAuth/signup",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"userAuth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resend-verify-code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ashrafosama6699@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/userAuth/resendcode",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"userAuth",
+								"resendcode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify-email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"activateCode\": \"6980\",\r\n    \"email\": \"ashrafosama6699@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/userAuth/verifyemail",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"userAuth",
+								"verifyemail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ashrafosama6699@gmail.com\",\r\n    \"password\": \"Ashraf@111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/userAuth/login",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"userAuth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forget-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ashrafosama6699@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/userAuth/forgetpassword",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"userAuth",
+								"forgetpassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify-code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"resetCode\": \"5501\",\r\n    \"email\": \"ashrafosama6699@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/userAuth/verifycode",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"userAuth",
+								"verifycode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ashrafosama6699@gmail.com\",\r\n    \"password\": \"Ashraf@111\",\r\n    \"passwordConfirm\": \"Ashraf@111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/userAuth/resetpassword",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"userAuth",
+								"resetpassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "get-all-users (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/user",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "userName asc",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "userName desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/user/account/66a543337a5757abb4f51364",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"user",
+								"account",
+								"66a543337a5757abb4f51364"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search-users (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/user/search",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"user",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "4",
+									"disabled": true
+								},
+								{
+									"key": "firstName",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "phoneNumber",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-user (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phoneNumber\": \"01153152009\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/user/update/65ff3729dfa95ff5f9352e3d",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"user",
+								"update",
+								"65ff3729dfa95ff5f9352e3d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-user (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/user/delete/65ff421ec719e20e1cfdc9d4",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"user",
+								"delete",
+								"65ff421ec719e20e1cfdc9d4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-my-profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{User}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/user/profiledata",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"user",
+								"profiledata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-my-profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{User}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"AshRaff\",\r\n    \"phoneNumber\": \"01153152008\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/user/updateprofile",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"user",
+								"updateprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-password",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{User}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"Ashraf@1234\",\r\n    \"password\": \"Ashraf@123\",\r\n    \"passwordConfirm\": \"Ashraf@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/user/updatepassword",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"user",
+								"updatepassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-profile-picture",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{User}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "profileImg",
+									"type": "file",
+									"src": "/C:/Users/ashra/OneDrive/Desktop/Picsart_23-02-02_23-35-34-405.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/user/addprofilepicture",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"user",
+								"addprofilepicture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-profile-picture",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{User}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "oldPublicId",
+									"value": "art-space/Users/45ad/ynwlmugamd13tghuccar",
+									"type": "text"
+								},
+								{
+									"key": "profileImg",
+									"type": "file",
+									"src": "/C:/Users/ashra/OneDrive/Desktop/Picsart_23-02-02_23-35-34-405.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/user/updateprofilepicture",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"user",
+								"updateprofilepicture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-profile",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{User}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/user/deleteaccount",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"user",
+								"deleteaccount"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Plan",
+			"item": [
+				{
+					"name": "add-plan (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "stamp",
+									"value": "Day",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "70",
+									"type": "text"
+								},
+								{
+									"key": "cover",
+									"type": "file",
+									"src": "/C:/Users/ashra/OneDrive/Pictures/Screenshots/Screenshot 2024-07-09 213215.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/plan",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"plan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-plans(Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/plan?size=10",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"plan"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-plan (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/plan/byId/66a57707c0a1a62be2ebda28",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"plan",
+								"byId",
+								"66a57707c0a1a62be2ebda28"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-plan (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"stamp\": \"Week\",\r\n    \"price\": 200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/plan/66a57923a07b20ff58ce7f2e",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"plan",
+								"66a57923a07b20ff58ce7f2e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-plan (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/plan/delete/66a57e4a626b02b121f25b39",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"plan",
+								"delete",
+								"66a57e4a626b02b121f25b39"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Room",
+			"item": [
+				{
+					"name": "add-room (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Training Room",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "descriptions for training room 1 test descriptions for training room 1 test descriptions for training room 1 test ",
+									"type": "text"
+								},
+								{
+									"key": "branch",
+									"value": "Dokki",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "Public",
+									"type": "text"
+								},
+								{
+									"key": "seats",
+									"value": "30",
+									"type": "text"
+								},
+								{
+									"key": "planId",
+									"value": "66a57707c0a1a62be2ebda28",
+									"type": "text"
+								},
+								{
+									"key": "cover",
+									"type": "file",
+									"src": "/C:/Users/ashra/OneDrive/Pictures/Screenshots/Screenshot 2024-07-09 213215.png"
+								},
+								{
+									"key": "otherImgs",
+									"type": "file",
+									"src": [
+										"/C:/Users/ashra/OneDrive/Pictures/Screenshots/Screenshot 2024-07-09 213215.png",
+										"/C:/Users/ashra/OneDrive/Pictures/Screenshots/Screenshot 2024-06-21 155641.png"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/rooms",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-room (Admin)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Funny Room\",\r\n    \"description\": \"test test test test test test test test test test test test test\",\r\n    \"branch\": \"Korba\",\r\n    \"seats\": 25,\r\n    \"type\": \"Public\",\r\n    \"planId\": \"66a57923a07b20ff58ce7f2e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/rooms/66a580b679ead9892959dbc7",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"rooms",
+								"66a580b679ead9892959dbc7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-room (Admin)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/rooms/66a580b679ead9892959dbc7",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"rooms",
+								"66a580b679ead9892959dbc7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-rooms",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/rooms?size=5",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"rooms"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-room",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/rooms/single/66a58e3ea27aedaa1df748ba",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"rooms",
+								"single",
+								"66a58e3ea27aedaa1df748ba"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search-rooms",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/rooms/search",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"rooms",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "t",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "local",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "User",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTU0MzMzN2E1NzU3YWJiNGY1MTM2NCIsImVtYWlsIjoiYXNocmFmb3NhbWE2Njk5QGdtYWlsLmNvbSIsInVzZXJOYW1lIjoiQXNocmFmIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MjIxMDY3MTEsImV4cCI6MTcyOTg4MjcxMX0.HnE5FM3rWHm58pk2D6LY_0ouBm-stueMMsnqmVIQaq0",
+			"type": "string"
+		},
+		{
+			"key": "Admin",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTUxOGRhOWQ4ODcwZjliM2RiNjAyYSIsInVzZXJOYW1lIjoiYXNocmFmMjIiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MjIxMDcwMTYsImV4cCI6MTcyOTg4MzAxNn0.q2DxFjsdcRyTgA2jEQsdFibRFdtEkCQz6Co7IDVbJ6I",
+			"type": "string"
+		}
+	]
+}
