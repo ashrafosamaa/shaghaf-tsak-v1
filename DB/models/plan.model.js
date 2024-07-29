@@ -14,6 +14,7 @@ const planSchema = new Schema({
     folderId: { type: String },
 
 }, {timestamps: true,
+
 })
 
 const Plan = model("Plan", planSchema);

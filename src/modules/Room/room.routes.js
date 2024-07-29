@@ -12,7 +12,7 @@ import { allowedExtensions } from "../../utils/allowed-extensions.js";
 const router = Router();
 
 
-router.post('/', authAdmin(), multerMiddleHost({
+router.post('/', authAdmin(['admin', 'manager']), multerMiddleHost({
     extensions: allowedExtensions.image
 }).fields([{ name: 'cover', maxCount: 1 }, { name: 'otherImgs', maxCount: 4 }]),
     validationMiddleware(validator.addRoomValidator),
@@ -24,10 +24,16 @@ router.get('/', validationMiddleware(validator.getAllRoomsValidator),
 router.get('/single/:roomId', validationMiddleware(validator.IDValidator),
     expressAsyncHandler(roomController.getRoomById))
 
-router.put('/:roomId', authAdmin(), validationMiddleware(validator.updateRoomValidator),
+router.post('/amentitie/:roomId', authAdmin(['admin', 'manager']), validationMiddleware(validator.addAmentitieValidator),
+    expressAsyncHandler(roomController.addAmentitie))
+
+router.post('/plan/:roomId', authAdmin(['admin', 'manager']), validationMiddleware(validator.addPlanValidator),
+    expressAsyncHandler(roomController.addPlan))
+
+router.put('/:roomId', authAdmin(['admin', 'manager']), validationMiddleware(validator.updateRoomValidator),
     expressAsyncHandler(roomController.updateRoom))
 
-router.delete('/:roomId', authAdmin(), validationMiddleware(validator.IDValidator),
+router.delete('/:roomId', authAdmin(['admin', 'manager']), validationMiddleware(validator.IDValidator),
     expressAsyncHandler(roomController.deleteRoom))
 
 router.get('/search', validationMiddleware(validator.searchValidator),

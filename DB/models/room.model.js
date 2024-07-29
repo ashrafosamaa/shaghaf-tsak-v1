@@ -33,11 +33,11 @@ const roomSchema = new Schema({
         required: true,
         enum: ["Private", "Public"]
     },
-    planId: {
+    planIds: [{
         type: Schema.Types.ObjectId,
         ref: "Plan",
-        required: true
-    },
+        unique: true
+    }],
     coverImg: {
         secure_url: { type: String },
         public_id: { type: String }
@@ -51,11 +51,8 @@ const roomSchema = new Schema({
     folderId: { type: String },
 
 }, {timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true }
+
 })
-
-
 
 const Room = model("Room", roomSchema);
 
