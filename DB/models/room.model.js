@@ -7,10 +7,10 @@ const roomSchema = new Schema({
         trim: true,
         required: true,
     },
-    branch: {
-        type: String,
-        required: true,
-        enum: ["Korba", "Dokki"]
+    branchId: {
+        type: Schema.Types.ObjectId,
+        ref: "Branch",
+        required: true
     },
     description: {
         type: String,

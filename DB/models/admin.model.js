@@ -21,10 +21,9 @@ const adminSchema = new Schema({
         type: Number,
         required: true
     },
-    branch: {
-        type: String,
-        required: true,
-        enum: ["Korba", "Dokki"]
+    branchId: {
+        type: Schema.Types.ObjectId,
+        ref: "Branch"
     },
     finalSalary: {
         type: Number,

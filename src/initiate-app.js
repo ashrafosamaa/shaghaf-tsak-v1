@@ -28,6 +28,8 @@ export const initiateApp = (app, express)=> {
     app.use('/plan', routers.planRouter)
     app.use('/rooms', routers.roomRouter)
     app.use('/book', routers.bookRouter)
+    app.use('/coupon', routers.couponRouter)
+    app.use('/branch', routers.branchRouter)
 
     app.get('/', (req, res, next)=> {
         res.send("<h1> Welcome In Shaghaf App </h1>");

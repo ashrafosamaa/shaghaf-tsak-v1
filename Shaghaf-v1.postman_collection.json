@@ -48,7 +48,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"mazen22\",\r\n    \"password\": \"Mazen@123\",\r\n    \"passwordConfirm\": \"Mazen@123\",\r\n    \"role\": \"staff\",\r\n    \"salary\": 5000,\r\n    \"branch\": \"Dokki\"\r\n}",
+							"raw": "{\r\n    \"userName\": \"momo22\",\r\n    \"password\": \"Momo@123\",\r\n    \"passwordConfirm\": \"Momo@123\",\r\n    \"role\": \"staff\",\r\n    \"salary\": 5000,\r\n    \"branchId\": \"66a832506e7b3022e755318f\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -248,14 +248,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{local}}/admin/worker/66a51a890a64738f50ed570d",
+							"raw": "{{local}}/admin/worker/66a832b46e7b3022e755319e",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"admin",
 								"worker",
-								"66a51a890a64738f50ed570d"
+								"66a832b46e7b3022e755319e"
 							]
 						}
 					},
@@ -285,14 +285,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{local}}/admin/salary/66a51c38cc6f2176a44b5764",
+							"raw": "{{local}}/admin/salary/66a832b46e7b3022e755319e",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"admin",
 								"salary",
-								"66a51c38cc6f2176a44b5764"
+								"66a832b46e7b3022e755319e"
 							]
 						}
 					},
@@ -322,14 +322,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{local}}/admin/deduction/66a51ade0a64738f50ed5715",
+							"raw": "{{local}}/admin/deduction/66a832b46e7b3022e755319e",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"admin",
 								"deduction",
-								"66a51ade0a64738f50ed5715"
+								"66a832b46e7b3022e755319e"
 							]
 						}
 					},
@@ -359,14 +359,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{local}}/admin/over-time/66a51ade0a64738f50ed5715",
+							"raw": "{{local}}/admin/over-time/66a832b46e7b3022e755319e",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"admin",
 								"over-time",
-								"66a51ade0a64738f50ed5715"
+								"66a832b46e7b3022e755319e"
 							]
 						}
 					},
@@ -1186,6 +1186,116 @@
 			]
 		},
 		{
+			"name": "Branch",
+			"item": [
+				{
+					"name": "add-branch(Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Shoubra\",\r\n    \"locationLink\": \"Shoubra location link\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/branch",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"branch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-branch(Admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/branch",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"branch"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-branch(Admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/branch/byId/66a832256e7b3022e7553188",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"branch",
+								"byId",
+								"66a832256e7b3022e7553188"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-branch(Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/branch/delete/66a832256e7b3022e7553188",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"branch",
+								"delete",
+								"66a832256e7b3022e7553188"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Room",
 			"item": [
 				{
@@ -1238,8 +1348,8 @@
 									"type": "text"
 								},
 								{
-									"key": "branch",
-									"value": "Dokki",
+									"key": "branchId",
+									"value": "66a832506e7b3022e755318f",
 									"type": "text"
 								},
 								{
@@ -1260,7 +1370,7 @@
 								{
 									"key": "otherImgs",
 									"type": "file",
-									"src": "/C:/Users/ashra/OneDrive/Desktop/Picsart_23-02-02_23-35-34-405.jpg"
+									"src": "/C:/Users/ashra/OneDrive/Pictures/ashraf.jpeg"
 								}
 							]
 						},
@@ -1323,7 +1433,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"planId\": \"66a57923a07b20ff58ce7f2e\"\r\n}",
+							"raw": "{\r\n    \"planId\": \"66a57707c0a1a62be2ebda28\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1331,14 +1441,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{local}}/rooms/plan/66a6d8e41eda2fbb155c3baf",
+							"raw": "{{local}}/rooms/plan/66a8336c6e7b3022e75531c2",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"rooms",
 								"plan",
-								"66a6d8e41eda2fbb155c3baf"
+								"66a8336c6e7b3022e75531c2"
 							]
 						}
 					},
@@ -1447,14 +1557,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{local}}/rooms/single/66a6d8e41eda2fbb155c3baf",
+							"raw": "{{local}}/rooms/single/66a8336c6e7b3022e75531c2",
 							"host": [
 								"{{local}}"
 							],
 							"path": [
 								"rooms",
 								"single",
-								"66a6d8e41eda2fbb155c3baf"
+								"66a8336c6e7b3022e75531c2"
 							]
 						}
 					},
@@ -1574,7 +1684,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"roomId\": \"66a58e3ea27aedaa1df748ba\",\r\n    \"planId\": \"66a57902a07b20ff58ce7f27\", \r\n    \"seats\": 2, \r\n    \"date\": \"2024-07-30\", \r\n    \"startTime\": \"09:00\", \r\n    \"endTime\": \"10:00\",\r\n    \"paymentMethod\": \"cash\"\r\n}",
+							"raw": "{\r\n    \"roomId\": \"66a8336c6e7b3022e75531c2\",\r\n    \"planId\": \"66a57902a07b20ff58ce7f27\", \r\n    \"seats\": 2, \r\n    \"date\": \"2024-07-31\", \r\n    \"startTime\": \"09:00\", \r\n    \"endTime\": \"10:00\",\r\n    \"paymentMethod\": \"cash\",\r\n    \"couponCode\": \"off10\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1653,6 +1763,165 @@
 							"path": [
 								"book",
 								"66a6d66f84c981a83efc9948"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Coupon",
+			"item": [
+				{
+					"name": "add-coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"couponCode\": \"off10\",\r\n    \"couponAmount\": 10,\r\n    \"isPercentage\": true,\r\n    \"fromDate\": \"2025-02-29\",\r\n    \"toDate\": \"2025-03-05\",\r\n    \"users\": [\r\n        {\r\n            \"userId\": \"66a543337a5757abb4f51364\",\r\n            \"maxUsage\": 3\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/coupon",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"coupon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validate-coupon (User)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{User}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"off10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/coupon/validateCoupon",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"coupon",
+								"validateCoupon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-coupons",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/coupon",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"coupon"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "5",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-coupon",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/coupon/byId?couponCode=off10",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"coupon",
+								"byId"
+							],
+							"query": [
+								{
+									"key": "couponCode",
+									"value": "off10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-coupon",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accesstoken",
+								"value": "{{Admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/coupon/66a8236b95d3505d8bdcf6a9",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"coupon",
+								"66a8236b95d3505d8bdcf6a9"
 							]
 						}
 					},

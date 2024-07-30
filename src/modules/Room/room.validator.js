@@ -3,7 +3,7 @@ import Joi from "joi";
 export const addRoomValidator = {
     body: Joi.object({
         name: Joi.string().required(), 
-        branch: Joi.string().required().valid("Korba", "Dokki"), 
+        branchId: Joi.string().length(24).hex().required(),
         description: Joi.string().required(), 
         seats: Joi.number().required(), 
         type: Joi.string().required().valid("Private", "Public"),

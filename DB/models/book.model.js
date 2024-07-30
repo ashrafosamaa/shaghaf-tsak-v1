@@ -16,11 +16,14 @@ const bookSchema = new Schema({
         ref: "Plan",
         required: true
     },
+    couponId:{ 
+        type: Schema.Types.ObjectId, 
+        ref: 'Coupon'
+    },
 
     branch: {
         type: String,
         required: true,
-        enum: ["Korba", "Dokki"]
     },
     seats: {
         type: Number,

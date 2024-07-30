@@ -32,7 +32,7 @@ export const createWorkerValidator = {
         passwordConfirm: Joi.string().required().valid(Joi.ref('password')),
         role: Joi.string().required().valid('manager', 'staff'),
         salary: Joi.number().required(),
-        branch: Joi.string().required().valid('Dokki', 'Korba'),
+        branchId: Joi.string().length(24).hex().required()
     })
 }
 

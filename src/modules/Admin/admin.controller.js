@@ -1,6 +1,7 @@
 import { APIFeatures } from "../../utils/api-features.js";
 
 import Admin from "../../../DB/models/admin.model.js";
+import Branch from "../../../DB/models/branch.model.js";
 
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
@@ -67,12 +68,15 @@ export const updatePassword = async (req, res, next)=> {
 
 export const createWorker = async (req, res, next) => {
     // destruct data from ceo
-    const { userName, password, role, salary, branch } = req.body
+    const { userName, password, role, salary, branchId } = req.body
     // check if userNameExist exists
     const userNameExist = await Admin.findOne({ userName })
     if (userNameExist) return next (new Error ("User Name already exists", { cause: 409 }))
     // check role
     if (role == "admin") return next (new Error ("Invalid role, this platform has only one Admin", { cause: 400 }))
+    // check branch
+    const branch = await Branch.findById(branchId)
+    if (!branch) return next (new Error ("Invalid branch", { cause: 400 }))
     // hash password
     const hashedPassword = bcrypt.hashSync(password, +process.env.SALT_ROUNDS)
     // final salary
@@ -83,7 +87,7 @@ export const createWorker = async (req, res, next) => {
         password: hashedPassword,
         role,
         salary,
-        branch,
+        branchId,
         finalSalary
     })
     if(!worker){
@@ -100,7 +104,9 @@ export const getAllWorkers = async (req, res, next) => {
     // destruct data from req.query
     const {_id} = req.authAdmin
     const { page, size, sortBy } = req.query;
-    const features = new APIFeatures(req.query, Admin.find({_id: {$ne: _id}}).select("-password -createdAt -updatedAt -__v"))
+    const features = new APIFeatures(req.query, Admin.find({_id: {$ne: _id}})
+        .populate({ path: "branchId", select: "name" })
+        .select("-password -createdAt -updatedAt -__v"))
         .pagination({ page, size })
         .sort(sortBy)
     const workers = await features.mongooseQuery
@@ -116,7 +122,9 @@ export const getAllWorkers = async (req, res, next) => {
 }
 
 export const getWorker = async (req, res, next) => {
-    const worker = await Admin.findById(req.params.adminId).select("-password -createdAt -updatedAt -__v")
+    const worker = await Admin.findById(req.params.adminId)
+    .populate({ path: "branchId", select: "name" })
+    .select("-password -createdAt -updatedAt -__v")
     if(!worker) {
         return next(new Error("Worker not found", { cause: 404 }));
     }
@@ -151,7 +159,9 @@ export const addDeduction = async (req, res, next)=> {
     // Destructure amount from req.body
     const { amount } = req.body;
     // Check if worker exists
-    const worker = await Admin.findById(req.params.adminId);
+    const worker = await Admin.findById(req.params.adminId)
+    .populate({ path: "branchId", select: "name" })
+    .select("-password -createdAt -updatedAt -__v")
     if (!worker) {
         return res.status(404).json({ msg: "Worker not found", statusCode: 404 });
     }
@@ -172,7 +182,7 @@ export const addDeduction = async (req, res, next)=> {
     res.status(200).json({
         msg: "Deduction added successfully",
         statusCode: 200,
-        newDeduction
+        worker
     });
 }
 
@@ -180,7 +190,9 @@ export const addOverTime = async (req, res, next)=> {
     // Destructure amount from req.body
     const { amount } = req.body;
     // Check if worker exists
-    const worker = await Admin.findById(req.params.adminId);
+    const worker = await Admin.findById(req.params.adminId)
+    .populate({ path: "branchId", select: "name" })
+    .select("-password -createdAt -updatedAt -__v")
     if (!worker) {
         return res.status(404).json({ msg: "Worker not found", statusCode: 404 });
     }
@@ -201,7 +213,7 @@ export const addOverTime = async (req, res, next)=> {
     res.status(200).json({
         msg: "Bouns added successfully",
         statusCode: 200,
-        newBouns
+        worker
     });
 }
 
@@ -223,11 +235,13 @@ export const deleteWorker = async (req, res, next)=> {
 export const search = async (req, res, next)=> {
     // destruct data from req.query
     const {page, size, sortBy, ...serach} = req.query
-    const features = new APIFeatures(req.query, Admin.find().select("-password -createdAt -updatedAt -__v"))
+    const features = new APIFeatures(req.query, Admin.find()
+    .populate({ path: "branchId", select: "name" })
+    .select("-password -createdAt -updatedAt -__v"))
     .pagination({page, size})
     .searchWorkers(serach)
     .sort(sortBy)
-    const workers = await features.mongooseQuery
+    const workers = await features.mongooseQuery 
     if(!workers.length) {
         return next (new Error("No workers found matching with your search query", { cause: 404 }));
     }

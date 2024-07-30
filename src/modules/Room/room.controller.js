@@ -3,12 +3,18 @@ import { generateUniqueString } from "../../utils/generate-unique-string.js";
 
 import Room from "../../../DB/models/room.model.js";
 import Plan from "../../../DB/models/plan.model.js";
+import Branch from "../../../DB/models/branch.model.js";
 
 import cloudinaryConnection from "../../utils/cloudinary.js";
 
 export const addRoom = async (req, res, next)=> {
     // destruct data from req.body
-    const {name, branch, description, seats, type} = req.body
+    const {name, branchId, description, seats, type} = req.body
+    // check branch
+    const branch = await Branch.findById(branchId)
+    if (!branch) {
+        return next(new Error('Branch not found', { cause: 404 }))
+    }
     if(!req.files.cover){
     // check Imgs
         return next(new Error('Cover Image is required', { cause: 400 }))
@@ -31,7 +37,7 @@ export const addRoom = async (req, res, next)=> {
         })
         otherImgs.push({ secure_url, public_id })
     }
-    const newRoom = { name, branch, description, seats, type, coverImg, otherImgs, folderId }
+    const newRoom = { name, branchId, description, seats, type, coverImg, otherImgs, folderId }
     const roomCreated = (await Room.create(newRoom))
     if (!roomCreated) {
         return next(new Error('Error while adding Room', { cause: 500 }))
@@ -65,6 +71,7 @@ export const getRoomById = async (req, res, next)=> {
     const {roomId} = req.params
     const room = await Room.findById(roomId)
     .populate({path:"planIds", select:"stamp price"})
+    .populate({path:"branchId", select:"name"})
     .select("-createdAt -updatedAt -__v -folderId -coverImg.public_id -otherImgs.public_id")
     if(!room) {
         return next(new Error('Room not found', { cause: 404 }))
@@ -83,6 +90,7 @@ export const addAmentitie = async (req, res, next)=> {
     // update
     const roomUpdated = await Room.findById(req.params.roomId)
     .populate({path:"planIds", select:"stamp price"})
+    .populate({path:"branchId", select:"name"})
     .select("-createdAt -updatedAt -__v -folderId -coverImg.public_id -otherImgs.public_id")
     if (!roomUpdated) {
         return next(new Error('Error while updating Room', { cause: 500 }))
@@ -128,6 +136,7 @@ export const addPlan = async (req, res, next)=> {
 export const updateRoom = async (req, res, next)=> {
     // destruct data from req.body
     const roomUpdated = await Room.findByIdAndUpdate(req.params.roomId, req.body, {new: true})
+    .populate({path:"branchId", select:"name"})
     .populate({path:"planIds", select:"stamp price"})
     .select("-createdAt -updatedAt -__v -folderId -coverImg.public_id -otherImgs.public_id")
     if (!roomUpdated) {

@@ -5,10 +5,11 @@ export const addBookValidator = {
         roomId: Joi.string().length(24).hex().required(), 
         planId: Joi.string().length(24).hex().required(),
         seats: Joi.number().required(), 
-        date: Joi.date().required(), 
+        date: Joi.date().greater(Date.now()-(24*60*60*1000)).required(), 
         startTime: Joi.string().required(), 
         endTime: Joi.string().required(), 
         paymentMethod: Joi.string().required().valid("cash", "card"),
+        couponCode: Joi.string().optional()
     }),
 }
 

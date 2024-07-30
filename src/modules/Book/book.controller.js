@@ -1,12 +1,14 @@
 import { APIFeatures } from "../../utils/api-features.js";
+import { applyCouponValidation } from "../../utils/coupon.validation.js";
 
 import Book from "../../../DB/models/book.model.js";
 import Plan from "../../../DB/models/plan.model.js";
 import Room from "../../../DB/models/room.model.js";
+import CouponUser from "../../../DB/models/coupon-user.model.js";
 
 export const addBook = async (req, res, next) => {
     // destruct data from req.body
-    const { roomId, planId, seats, date, startTime, endTime, paymentMethod } = req.body;
+    const { roomId, planId, seats, date, startTime, endTime, paymentMethod, couponCode } = req.body;
     // check if user exists
     const user = await Book.findOne({userId: req.authUser._id, paymentstatus: "unpaid"});
     if (user) {
@@ -24,17 +26,23 @@ export const addBook = async (req, res, next) => {
     if (seats > isRoom.seats) {
         return next(new Error("Not enough seats", { cause: 400 }));
     }
-    // check date
-    if (date < new Date()) {
-        return next(new Error("Invalid date", { cause: 400 }));
-    }
-    // check time
-    if (startTime < new Date() || endTime < startTime) {
-        return next(new Error("Invalid time", { cause: 400 }));
+    // coupon code check
+    let coupon = null
+    if(couponCode){
+        const isCouponValid = await applyCouponValidation(couponCode, req.authUser._id);
+        if(isCouponValid.status) return res.status(isCouponValid.status).json({ msg: isCouponValid.msg, statusCode: isCouponValid.status })
+        coupon = isCouponValid;
     }
     const dateFormate = new Date(date);
     // cancellation deadline
     const cancellationDeadline = new Date(dateFormate.getTime() + 2 * 24 * 60 * 60 * 1000).toISOString();
+    // calculate total price
+    let totalPrice = seats * isPlan.price;
+    if(coupon?.isFixed){
+        totalPrice = totalPrice - coupon.couponAmount;
+    }else if(coupon?.isPercentage){
+        totalPrice = totalPrice - (totalPrice * coupon.couponAmount / 100);
+    }
     // create new book 
     const newBook = new Book({
         roomId,
@@ -43,14 +51,19 @@ export const addBook = async (req, res, next) => {
         date: dateFormate,
         startTime,
         endTime,
-        branch: isRoom.branch,
+        branch: isRoom.branchId,
         paymentMethod,
         cancellationDeadline,
-        totalPrice: seats * isPlan.price,
+        totalPrice,
+        couponId: coupon?._id,
         userId: req.authUser._id
-    });
+    })
     // save book
     await newBook.save();
+    // update coupon usage count
+    if(newBook.couponId){
+        const couponUser = await CouponUser.findOneAndUpdate({couponId: newBook.couponId}, {$inc: {usageCount: 1}})
+    }
     // send response
     res.status(200).json({
         msg: "Booked successfully",
